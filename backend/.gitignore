@@ -25,3 +25,14 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Local AI and editor tooling
+.agents/
+.claude/
+.mcp.json
+opencode.json
+
+# Local database and caches
+/database/*.sqlite
+/database/*.sqlite-*
+.phpunit.cache/
