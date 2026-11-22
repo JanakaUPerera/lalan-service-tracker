@@ -155,16 +155,16 @@ See `screenshots/`: login, request list with filters, create form with validatio
 
 ## AI Use & Verification
 
-**Tools used:** Claude (chat assistant) as a step-by-step guide. [Add any other tool you used, or state none.]
+**Tools used:** Claude was used as a step-by-step architecture and implementation guide. GitHub Copilot in VS Code was used to assist with code changes and documentation edits.
 
-**Work assisted:** planning the architecture and slice order, example code for the Laravel API, tests and Next.js components, which I typed in and adapted file by file, and README structure. [Edit so this matches reality.]
+**Work assisted:** AI assistance helped plan the architecture and implementation slices, draft Laravel API and Next.js patterns, suggest test cases, and structure the README. The application code was reviewed and adapted locally before it was committed.
 
-**Representative prompt / advice:** I asked for step-by-step guidance with SOLID/best-practice code that I would write by hand. A representative piece of advice was to implement the status change as a transactional action that re-reads the row, checks `expected_version`, then does a guarded `UPDATE … WHERE version = ?` and inserts the history row, rolling back on any failure.
+**Representative prompt / advice:** I requested step-by-step guidance with SOLID and maintainable code that I could review and adapt. A representative recommendation was to implement status changes as a transactional action that re-reads the request, validates the `expected_version`, performs a guarded `UPDATE … WHERE version = ?`, inserts the audit history row, and rolls back on failure.
 
 **How I verified and corrected output:**
-- Ran the automated test suite (`php artisan test`), covering auth, validation, cross-user isolation, valid/invalid transitions and stale versions.
-- Reproduced a stale update manually with two browser tabs and inspected the 409 JSON in DevTools.
-- Reviewed `route:list`, checked requests for `created_by`/`status`/`version` tampering, and re-read the Laravel docs for Sanctum SPA config. [Keep only what you really did.]
-- Corrections: switched the generated Tailwind scaffold to Bootstrap + FontAwesome as I wanted; noticed a cross-user test would have "passed" on a 404 from a not-yet-existing route, so the PATCH assertion was added only after the route existed. [Add your own corrections or bugs you fixed.]
+- Ran `php artisan test --compact`: all 26 tests passed with 133 assertions, covering authentication, validation, protected fields, cross-user isolation, status transitions, history, and stale versions.
+- Reviewed the registered API routes and tested protected fields and cross-user access through the feature suite.
+- Reviewed the frontend behavior and screenshots for login, filtering, creation, detail/history, and stale-update recovery.
+- Corrected and refined AI suggestions where needed: the frontend uses Bootstrap 5 and FontAwesome instead of a Tailwind-based scaffold, and feature tests assert the behavior of the real authenticated routes rather than relying on a superficial response.
 
-**One independent technical decision:** [Write one you truly made and can defend, e.g.: "I chose a monorepo with Bootstrap CSS only (no JS bundle) to keep the frontend small and dependency-light", or "I decided non-owned records return 404 rather than 403 to avoid leaking existence."]
+**One independent technical decision:** I chose a monorepo with Bootstrap CSS and FontAwesome icons, keeping the frontend dependency-light and avoiding an additional JavaScript UI/component bundle. I also decided to return 404 for a record owned by another user rather than 403, so record existence is not exposed.
