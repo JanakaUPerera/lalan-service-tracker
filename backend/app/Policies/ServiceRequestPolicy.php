@@ -10,7 +10,7 @@ class ServiceRequestPolicy
 {
     public function owns (User $user, ServiceRequest $serviceRequest): Response
     {
-        return $user->id == $serviceRequest->created_id ? Response::allow() : Response::denyAsNotFound();
+        return $user->id == $serviceRequest->created_by ? Response::allow() : Response::denyAsNotFound();
     }
 
     public function view (User $user, ServiceRequest $serviceRequest): Response

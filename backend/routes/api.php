@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\RequestHistoryController;
+use App\Http\Controllers\Api\RequestStatusController;
 use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -21,4 +22,5 @@ Route::middleware('auth:sanctum')->group(function () {
         ->parameters(['requests' => 'serviceRequest']);
 
     Route::get('requests/{serviceRequest}/history', [RequestHistoryController::class, 'index']);
+    Route::patch('requests/{serviceRequest}/status', [RequestStatusController::class, 'update']);
 });
