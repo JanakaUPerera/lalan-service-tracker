@@ -47,11 +47,11 @@ export function CreateRequestForm() {
     setErrors({});
 
     try {
-      await requestsApi.create(form);
+      const created = await requestsApi.create(form);
       setForm(EMPTY_FORM);
       showToast('Request created successfully.');
       refreshRequests();
-      router.push('/requests');
+      router.push(`/requests/${created.id}`);
     } catch (error) {
       if (error instanceof ApiError && error.status === 422) {
         setErrors(error.errors ?? {});

@@ -38,3 +38,18 @@ export interface CreateRequestPayload {
   description: string;
   priority: RequestPriority;
 }
+
+export interface RequestHistoryEntry {
+  id: number;
+  from_status: RequestStatus;
+  to_status: RequestStatus;
+  remark: string | null;
+  actioned_by?: { id: number; name: string };
+  created_at: string;
+}
+
+export interface ChangeStatusPayload {
+  status: RequestStatus;
+  expected_version: number;
+  remark?: string;
+}

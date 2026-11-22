@@ -39,7 +39,7 @@ class ServiceRequest extends Model
 
     public function histories(): HasMany
     {
-        return $this->hasMany(RequestStatusHistory::class)->orderBy('created_at')->orderBy('id');
+        return $this->hasMany(RequestStatusHistory::class)->orderBy('created_at', 'desc')->orderBy('id');
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder

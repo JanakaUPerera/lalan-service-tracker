@@ -75,7 +75,7 @@ export function RequestList() {
         <div className="card">
           {/* Keep old rows visible but dimmed while the next page loads */}
           <div aria-busy={loading} className={loading ? 'opacity-50' : undefined}>
-            <RequestTable requests={data.data} />
+            <RequestTable requests={data.data} startNumber={data.meta.from ?? 1} />
           </div>
           <div className="card-footer bg-white">
             <Pagination

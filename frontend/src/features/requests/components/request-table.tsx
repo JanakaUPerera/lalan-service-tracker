@@ -3,7 +3,13 @@ import { formatDateTime } from '@/lib/format';
 import type { ServiceRequest } from '../types';
 import { PriorityBadge, StatusBadge } from './badges';
 
-export function RequestTable({ requests }: { requests: ServiceRequest[] }) {
+export function RequestTable({
+  requests,
+  startNumber,
+}: {
+  requests: ServiceRequest[];
+  startNumber: number;
+}) {
   return (
     <div className="table-responsive">
       <table className="table table-hover align-middle mb-0">
@@ -17,9 +23,9 @@ export function RequestTable({ requests }: { requests: ServiceRequest[] }) {
           </tr>
         </thead>
         <tbody>
-          {requests.map((r) => (
+          {requests.map((r, index) => (
             <tr key={r.id}>
-              <td className="text-muted">{r.id}</td>
+              <td className="text-muted">{startNumber + index}</td>
               <td>
                 <Link href={`/requests/${r.id}`}>{r.title}</Link>
               </td>
