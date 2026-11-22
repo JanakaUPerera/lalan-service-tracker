@@ -11,6 +11,7 @@ import {
 } from 'react';
 import { authApi } from '@/lib/api/auth';
 import type { LoginCredentials, User } from '@/types/api';
+import { setUnauthorizedHandler } from '@/lib/api/client';
 
 type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated';
 
@@ -31,6 +32,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
 
+    setUnauthorizedHandler(() => {
+      setUser(null);
+      setStatus('unauthenticated');
+    });
+
     authApi
       .me()
       .then((me) => {
@@ -46,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => {
       cancelled = true;
+      setUnauthorizedHandler(null);
     };
   }, []);
 

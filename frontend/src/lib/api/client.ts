@@ -84,6 +84,10 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
   const payload = await response.json().catch(() => null);
 
   if (!response.ok) {
+    if (response.status === 401 && !path.startsWith('/auth/')) {
+      onUnauthorized?.();
+    }
+
     throw new ApiError(
       response.status,
       payload?.message ?? 'Something went wrong.',
@@ -94,4 +98,10 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
   }
 
   return payload as T;
+}
+
+let onUnauthorized: (() => void) | null = null;
+
+export function setUnauthorizedHandler(handler: (() => void) | null): void {
+  onUnauthorized = handler;
 }

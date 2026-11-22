@@ -5,7 +5,7 @@ namespace App\Enums;
 enum RequestStatus: string
 {
     case Open = 'OPEN';
-    case InProgress = 'In_Progress';
+    case InProgress = 'IN_PROGRESS';
     case Resolved = 'RESOLVED';
 
     public function getNext(): ?self

@@ -12,7 +12,7 @@ class RequestStatusHistory extends Model
 
     protected $fillable = ['service_request_id', 'actioned_by', 'from_status', 'to_status', 'remark'];
 
-    protected function cast(): array
+    protected function casts(): array
     {
         return [
             'from_status' => RequestStatus::class,
